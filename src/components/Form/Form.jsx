@@ -86,7 +86,7 @@ const FormContact = () => {
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
 
-            <Button variant="outline-danger" type="submit">
+            <Button variant="outline-success" type="submit" size="lg">
               Submit
             </Button>
           </Form>

@@ -7,10 +7,10 @@ export const App = () => {
   return (
     <Container className="py-10">
       <Row>
-        <Col>
+        <Col xs={12} md={6} className="pb-10">
           <FormContact />
         </Col>
-        <Col>
+        <Col md={6}>
           <Filter />
           <ListContact />
         </Col>
