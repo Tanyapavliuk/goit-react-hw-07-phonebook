@@ -14,7 +14,7 @@ const ListContact = () => {
 
   useEffect(() => {
     dispatch(getAllContanct());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const visibleContactList = () => {
