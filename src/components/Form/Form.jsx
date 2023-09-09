@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/sliceContact';
+import { addContanct } from 'redux/sliceContact';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import * as formik from 'formik';
@@ -26,7 +26,7 @@ const mySchema = yup.object().shape({
 const FormContact = () => {
   const { Formik } = formik;
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contants);
+  const { contacts } = useSelector(state => state.contacts);
 
   const [show, setShow] = useState(false);
 
@@ -37,7 +37,7 @@ const FormContact = () => {
     const inArray = contacts.some(
       contact =>
         contact.name.toLowerCase() === nameUser.toLowerCase() &&
-        contact.phone === phone
+        contact.phone === Number(phone)
     );
 
     if (inArray) {
@@ -46,7 +46,7 @@ const FormContact = () => {
       return;
     }
 
-    dispatch(addContact({ name: nameUser, phone }));
+    dispatch(addContanct({ name: nameUser, phone }));
     actions.resetForm();
   };
 

@@ -1,19 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deliteContact } from 'redux/sliceContact';
+import { deleteContactByID, getAllContanct } from 'redux/sliceContact';
 import Table from 'react-bootstrap/Table';
+import { nanoid } from '@reduxjs/toolkit';
+import { useEffect, useState } from 'react';
 
 const ListContact = () => {
-  const contacts = useSelector(state => state.contants);
+  const { contacts } = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filter);
+
+  const [visibleContacts, setVisibleContacts] = useState([]);
 
   const dispatch = useDispatch();
 
-  const visibleContactList = () => {
-    const visibleList = contacts.filter(contact => {
-      return contact.name.toLowerCase().includes(filter.toLowerCase());
-    });
-    return visibleList;
-  };
+  useEffect(() => {
+    dispatch(getAllContanct());
+  }, []);
+
+  useEffect(() => {
+    const visibleContactList = () => {
+      if (contacts.length > 0) {
+        return contacts.filter(contact =>
+          contact.name.toLowerCase().includes(filter.toLowerCase())
+        );
+      }
+      return contacts;
+    };
+    setVisibleContacts(visibleContactList());
+  }, [contacts, filter]);
 
   return (
     <Table striped bordered hover variant="ligth">
@@ -26,14 +39,14 @@ const ListContact = () => {
         </tr>
       </thead>
       <tbody>
-        {visibleContactList().map((contact, i) => (
-          <tr>
+        {visibleContacts.map((contact, i) => (
+          <tr key={nanoid()}>
             <td>{i + 1}</td>
             <td>{contact.name}</td>
             <td>{contact.phone}</td>
             <td
-              onClick={e => {
-                dispatch(deliteContact(contact.id));
+              onClick={() => {
+                dispatch(deleteContactByID(contact.id));
               }}
               style={{
                 display: 'flex',
